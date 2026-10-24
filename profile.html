@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Identity Profile | Soul Society</title>
+    <title>Tito Romadhoni | Soul Society ID</title>
 
     <style>
         * {
@@ -27,6 +27,372 @@
             z-index: -1;
             background:
                 radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255, 0, 40, 0.2),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(60, 60, 255, 0.15),
+                    transparent 35%
+                ),
+                #08080c;
+        }
+
+        .aura {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #ff173d;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.2;
+            animation: auraMove 7s ease-in-out infinite alternate;
+        }
+
+        @keyframes auraMove {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(70px, 50px);
+            }
+        }
+
+        header {
+            padding: 25px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 38, 56, 0.3);
+        }
+
+        .logo {
+            color: #ff2638;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 4px;
+        }
+
+        main {
+            width: min(90%, 750px);
+            margin: 50px auto;
+            animation: fadeUp 1s ease both;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .heading .subtitle {
+            color: #ff4355;
+            font-size: 11px;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(25px, 5vw, 42px);
+            margin-bottom: 12px;
+        }
+
+        h1 span {
+            color: #ff2638;
+            text-shadow: 0 0 20px rgba(255, 38, 56, 0.5);
+        }
+
+        .heading .description {
+            color: #a0a0ad;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .profile-card {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 38, 56, 0.4);
+            box-shadow: 0 0 35px rgba(255, 0, 40, 0.08);
+            transition: 0.3s;
+        }
+
+        .profile-card:hover {
+            border-color: #ff2638;
+            box-shadow: 0 0 35px rgba(255, 0, 40, 0.2);
+        }
+
+        /* FOTO PROFIL */
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #303039;
+        }
+
+        .photo-frame {
+            width: 125px;
+            height: 150px;
+            flex-shrink: 0;
+            padding: 4px;
+            border: 1px solid #ff2638;
+            background: linear-gradient(135deg, #ff2638, #252535);
+            box-shadow: 0 0 20px rgba(255, 38, 56, 0.2);
+            overflow: hidden;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #17171d;
+        }
+
+        .profile-info h2 {
+            font-size: clamp(19px, 4vw, 27px);
+            margin-bottom: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-info p {
+            color: #aaaab5;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .profile-info .rank {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 7px 10px;
+            color: #ff4355;
+            border: 1px solid rgba(255, 38, 56, 0.5);
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .section-title {
+            margin: 25px 0 18px;
+            color: #ff4355;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-item {
+            padding: 17px;
+            background: rgba(255, 255, 255, 0.035);
+            border-left: 2px solid #ff2638;
+            transition: 0.3s;
+        }
+
+        .info-item:hover {
+            background: rgba(255, 38, 56, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .label {
+            color: #92929e;
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .value {
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .about {
+            color: #c1c1cb;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .back-button {
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            padding: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background: #e51b35;
+            border: 1px solid #ff2638;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background: transparent;
+            box-shadow: 0 0 20px rgba(255, 38, 56, 0.3);
+        }
+
+        footer {
+            padding: 25px 15px;
+            text-align: center;
+            color: #777783;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        footer span {
+            color: #ff2638;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 500px) {
+            main {
+                margin: 30px auto;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-top {
+                align-items: center;
+                gap: 15px;
+            }
+
+            .photo-frame {
+                width: 95px;
+                height: 120px;
+            }
+
+            .info {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="aura"></div>
+    </div>
+
+    <header>
+        <div class="logo">SOUL SOCIETY // PERSONNEL ARCHIVE</div>
+    </header>
+
+    <main>
+
+        <section class="heading">
+            <p class="subtitle">IDENTITY DATABASE</p>
+            <h1>PERSONAL <span>PROFILE</span></h1>
+            <p class="description">
+                Selamat datang di halaman identitas pribadi saya.
+            </p>
+        </section>
+
+        <section class="profile-card">
+
+            <div class="profile-top">
+
+                <!--
+                FOTO KAMU:
+                Simpan foto dengan nama foto.jpg di repository
+                yang sama dengan profile.html.
+                -->
+
+                <div class="photo-frame">
+                    <img
+                        src="foto.jpg"
+                        alt="Foto Tito Romadhoni"
+                        onerror="this.style.display='none'; this.parentElement.style.background='#17171d';"
+                    >
+                </div>
+
+                <div class="profile-info">
+                    <h2>Tito Romadhoni</h2>
+                    <p>Siswa SMK</p>
+                    <p>Pelajar Desain Komunikasi Visual</p>
+                    <span class="rank">STUDENT PROFILE</span>
+                </div>
+
+            </div>
+
+            <h3 class="section-title">IDENTITY INFORMATION</h3>
+
+            <div class="info">
+
+                <div class="info-item">
+                    <p class="label">NAMA LENGKAP</p>
+                    <p class="value">Tito Romadhoni</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">KELAS</p>
+                    <p class="value">10 DKV 2</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">SEKOLAH</p>
+                    <p class="value">SMK 7 Batam</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">STATUS</p>
+                    <p class="value">Pelajar</p>
+                </div>
+
+            </div>
+
+            <h3 class="section-title">ABOUT ME</h3>
+
+            <p class="about">
+                Halo! Nama saya Tito Romadhoni. Saya merupakan siswa
+                kelas 10 DKV 2 di SMK 7 Batam. Halaman ini merupakan
+                profil digital saya yang dibuat dengan desain bertema
+                anime Bleach, menggunakan HTML, CSS, dan JavaScript.
+            </p>
+
+            <a href="index.html" class="back-button">
+                ← KEMBALI KE HALAMAN UTAMA
+            </a>
+
+        </section>
+
+    </main>
+
+    <footer>
+        SOUL SOCIETY DIGITAL ARCHIVE<br>
+        <span>TITO ROMADHONI • PERSONAL PROFILE</span>
+    </footer>
+
+</body>
+</html>ial-gradient(
                     circle at 20% 20%,
                     rgba(255, 0, 40, 0.18),
                     transparent 35%
