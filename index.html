@@ -681,7 +681,7 @@
 
             </div>
 
-            <button class="bankai" onclick="aktifkanBankai()">
+            <button class="bankai" onclick="bukaProfil()">
                 ⚔ RELEASE BANKAI
             </button>
 
@@ -737,8 +737,11 @@
                 tombol.textContent = "🔥 BANKAI ACTIVATED";
             } else {
                 tombol.textContent = "⚔ RELEASE BANKAI";
-            }
-        }
+       }
+            // Membuka halaman profil
+        function bukaProfil() {
+            window.location.href = "profile.html";
+       }
     </script>
 
 </body>
