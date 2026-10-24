@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Identity Profile | Soul Society</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #08080c;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255, 0, 40, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(70, 70, 255, 0.15),
+                    transparent 35%
+                ),
+                #08080c;
+        }
+
+        .aura {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: #ff173d;
+            filter: blur(100px);
+            opacity: 0.2;
+            animation: auraMove 7s ease-in-out infinite alternate;
+        }
+
+        @keyframes auraMove {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(70px, 50px);
+            }
+        }
+
+        header {
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 38, 56, 0.3);
+        }
+
+        .logo {
+            color: #ff2638;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 4px;
+        }
+
+        main {
+            width: min(90%, 750px);
+            margin: 55px auto;
+            animation: fadeUp 1s ease both;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .heading p {
+            color: #ff4355;
+            font-size: 11px;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(25px, 5vw, 42px);
+            margin-bottom: 12px;
+        }
+
+        h1 span {
+            color: #ff2638;
+            text-shadow: 0 0 20px rgba(255, 38, 56, 0.4);
+        }
+
+        .heading .description {
+            color: #a0a0ad;
+            font-size: 14px;
+            line-height: 1.8;
+            letter-spacing: 0;
+        }
+
+        .profile-card {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 38, 56, 0.4);
+            box-shadow: 0 0 35px rgba(255, 0, 40, 0.08);
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #303039;
+        }
+
+        .avatar {
+            width: 85px;
+            height: 85px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #7f1024, #15151e);
+            border: 1px solid #ff2638;
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .profile-top h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-top p {
+            color: #aaaab5;
+            font-size: 13px;
+        }
+
+        .section-title {
+            margin: 25px 0 18px;
+            color: #ff4355;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.035);
+            border-left: 2px solid #ff2638;
+        }
+
+        .label {
+            color: #92929e;
+            font-size: 11px;
+            margin-bottom: 9px;
+        }
+
+        .value {
+            color: #fff;
+            font-size: 15px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+            line-height: 1.5;
+        }
+
+        .about {
+            color: #c1c1cb;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .back-button {
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background: #e51b35;
+            border: 1px solid #ff2638;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background: transparent;
+            box-shadow: 0 0 20px rgba(255, 38, 56, 0.2);
+        }
+
+        footer {
+            padding: 25px;
+            text-align: center;
+            color: #777783;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 500px) {
+            main {
+                margin: 35px auto;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-top {
+                gap: 15px;
+            }
+
+            .avatar {
+                width: 65px;
+                height: 65px;
+                font-size: 20px;
+            }
+
+            .profile-top h2 {
+                font-size: 19px;
+            }
+
+            .info {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="aura"></div>
+    </div>
+
+    <header>
+        <div class="logo">SOUL SOCIETY // PERSONNEL ARCHIVE</div>
+    </header>
+
+    <main>
+
+        <section class="heading">
+            <p>IDENTITY DATABASE</p>
+            <h1>PERSONAL <span>PROFILE</span></h1>
+            <p class="description">
+                Informasi identitas dan deskripsi pemilik ID.
+            </p>
+        </section>
+
+        <section class="profile-card">
+
+            <div class="profile-top">
+                <div class="avatar">BS</div>
+
+                <div>
+                    <h2>Budi Santoso</h2>
+                    <p>Digital Identity Profile</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">IDENTITY INFORMATION</h3>
+
+            <div class="info">
+
+                <div class="info-item">
+                    <p class="label">NAMA LENGKAP</p>
+                    <p class="value">Budi Santoso</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">NOMOR ID</p>
+                    <p class="value">ID-001</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">JABATAN</p>
+                    <p class="value">Teknisi</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">DIVISI</p>
+                    <p class="value">IT Division</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">STATUS</p>
+                    <p class="value">Aktif</p>
+                </div>
+
+                <div class="info-item">
+                    <p class="label">ORGANISASI</p>
+                    <p class="value">Contoh Organisasi</p>
+                </div>
+
+            </div>
+
+            <h3 class="section-title">PERSONAL DESCRIPTION</h3>
+
+            <p class="about">
+                Tuliskan deskripsi singkat tentang diri kamu di sini.
+                Kamu bisa menjelaskan peran, keahlian, minat,
+                atau informasi lain yang relevan dengan tugas ID kamu.
+            </p>
+
+            <a href="index.html" class="back-button">
+                ← KEMBALI KE HALAMAN UTAMA
+            </a>
+
+        </section>
+
+    </main>
+
+    <footer>
+        SOUL SOCIETY DIGITAL ARCHIVE<br>
+        PERSONAL IDENTITY PROFILE
+    </footer>
+
+</body>
+</html>
