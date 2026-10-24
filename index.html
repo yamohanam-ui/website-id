@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Informasi ID | Digital Profile</title>
+    <title>SOUL SOCIETY | ID Profile</title>
 
     <style>
-        /* =========================
-           1. PENGATURAN DASAR
-        ========================= */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+        :root {
+            --red: #ff2638;
+            --dark-red: #8b0000;
+            --white: #f5f5f5;
+            --gray: #a4a4ad;
+            --bg: #07070a;
+        }
 
         * {
             margin: 0;
@@ -17,247 +23,273 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --cyan: #48e5ff;
-            --blue: #5484ff;
-            --purple: #a855f7;
-            --white: #f8fafc;
-            --muted: #a5b4cc;
-        }
-
         body {
             min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
             color: var(--white);
-            background: #080d1c;
+            font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
         }
 
-        /* =========================
-           2. ANIMASI BACKGROUND
-        ========================= */
+        /* BACKGROUND */
 
         .background {
             position: fixed;
             inset: 0;
             overflow: hidden;
-            z-index: -1;
+            z-index: -2;
+
             background:
                 radial-gradient(
-                    circle at 15% 20%,
-                    rgba(84, 132, 255, 0.19),
-                    transparent 35%
+                    ellipse at 50% 100%,
+                    rgba(139, 0, 0, 0.27),
+                    transparent 55%
                 ),
-                radial-gradient(
-                    circle at 85% 80%,
-                    rgba(168, 85, 247, 0.17),
-                    transparent 35%
-                ),
-                #080d1c;
+                linear-gradient(
+                    135deg,
+                    #050505,
+                    #101016,
+                    #080808
+                );
         }
 
-        .orb {
+        .aura {
             position: absolute;
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
             border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.45;
-            animation: float 10s ease-in-out infinite alternate;
+            filter: blur(100px);
+            opacity: 0.25;
+            animation: auraMove 9s ease-in-out infinite alternate;
         }
 
-        .orb-one {
-            background: #2563eb;
-            top: -100px;
-            left: -100px;
+        .aura.red {
+            background: #ff001e;
+            top: 5%;
+            left: -150px;
         }
 
-        .orb-two {
-            background: #9333ea;
-            right: -100px;
-            bottom: -100px;
+        .aura.blue {
+            background: #344cff;
+            bottom: 0;
+            right: -150px;
             animation-delay: -4s;
         }
 
-        .orb-three {
-            background: #0891b2;
-            width: 200px;
-            height: 200px;
-            top: 45%;
-            left: 45%;
-            animation-delay: -7s;
-        }
-
-        @keyframes float {
+        @keyframes auraMove {
             from {
                 transform: translate(0, 0) scale(1);
             }
 
             to {
-                transform: translate(60px, -50px) scale(1.2);
+                transform: translate(80px, -50px) scale(1.3);
             }
         }
 
-        /* =========================
-           3. HEADER
-        ========================= */
+        /* PARTICLES */
+
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -20px;
+            width: 3px;
+            height: 3px;
+            background: var(--red);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--red);
+            opacity: 0;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 0.9;
+            }
+
+            85% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-110vh) translateX(80px);
+                opacity: 0;
+            }
+        }
+
+        /* HEADER */
 
         header {
-            width: 100%;
-            padding: 25px 7%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            animation: slideDown 0.8s ease both;
+            padding: 25px 8%;
+            border-bottom: 1px solid rgba(255, 38, 56, 0.2);
+            animation: appear 1s ease both;
         }
 
         .logo {
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 3px;
         }
 
         .logo span {
-            color: var(--cyan);
+            color: var(--red);
         }
 
-        .header-badge {
-            border: 1px solid rgba(72, 229, 255, 0.3);
-            color: var(--cyan);
-            padding: 9px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            background: rgba(72, 229, 255, 0.06);
+        .system {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #ff5260;
         }
 
-        /* =========================
-           4. KONTEN UTAMA
-        ========================= */
-
-        main {
-            width: 100%;
-            min-height: calc(100vh - 90px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 20px 50px;
+        .system::before {
+            content: "";
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--red);
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 10px var(--red);
+            animation: blink 1.5s infinite;
         }
 
-        .intro {
-            text-align: center;
-            margin-bottom: 30px;
-            animation: fadeUp 0.8s ease 0.15s both;
-        }
-
-        .intro-label {
-            color: var(--cyan);
-            font-size: 12px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-
-        .intro h1 {
-            font-size: clamp(28px, 5vw, 46px);
-            margin-bottom: 12px;
-            line-height: 1.2;
-        }
-
-        .intro h1 span {
-            background: linear-gradient(
-                90deg,
-                var(--cyan),
-                #a78bfa,
-                var(--cyan)
-            );
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientMove 4s linear infinite;
-        }
-
-        @keyframes gradientMove {
-            to {
-                background-position: 200% center;
+        @keyframes blink {
+            50% {
+                opacity: 0.3;
             }
         }
 
-        .intro p {
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.7;
+        /* HERO */
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 65px 22px 50px;
         }
 
-        /* =========================
-           5. KARTU INFORMASI
-        ========================= */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: appear 1s 0.2s ease both;
+        }
 
-        .id-card {
+        .subtitle {
+            color: var(--red);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(28px, 6vw, 58px);
+            font-weight: 900;
+            letter-spacing: 3px;
+            line-height: 1.3;
+        }
+
+        h1 span {
+            color: var(--red);
+            text-shadow: 0 0 25px rgba(255, 38, 56, 0.6);
+        }
+
+        .hero p {
+            color: var(--gray);
+            font-size: 16px;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .line {
+            width: 100px;
+            height: 3px;
+            margin: 25px auto 0;
+            background: var(--red);
+            box-shadow: 0 0 15px var(--red);
+            animation: linePulse 2s infinite alternate;
+        }
+
+        @keyframes linePulse {
+            from {
+                width: 60px;
+                opacity: 0.6;
+            }
+
+            to {
+                width: 150px;
+                opacity: 1;
+            }
+        }
+
+        /* ID CARD */
+
+        .card {
             position: relative;
-            width: 100%;
-            max-width: 460px;
-            padding: 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.13);
+            max-width: 560px;
+            margin: auto;
+            padding: 32px;
+            overflow: hidden;
 
             background: linear-gradient(
                 145deg,
-                rgba(255, 255, 255, 0.10),
-                rgba(255, 255, 255, 0.025)
+                rgba(30, 30, 35, 0.95),
+                rgba(9, 9, 12, 0.98)
             );
 
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 38, 56, 0.45);
+            border-radius: 5px;
 
             box-shadow:
-                0 25px 70px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+                0 0 40px rgba(255, 0, 30, 0.08),
+                inset 0 0 30px rgba(255, 0, 30, 0.025);
 
-            overflow: hidden;
-            animation: fadeUp 0.9s ease 0.3s both;
+            animation: appear 1s 0.4s ease both;
+
             transition:
-                transform 0.35s ease,
-                border-color 0.35s ease,
-                box-shadow 0.35s ease;
+                transform 0.35s,
+                box-shadow 0.35s,
+                border-color 0.35s;
         }
 
-        .id-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 80%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.06),
-                transparent
-            );
-            transform: skewX(-20deg);
-            animation: shine 7s ease-in-out infinite;
-            pointer-events: none;
-        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--red);
 
-        @keyframes shine {
-            0%, 60% {
-                left: -120%;
-            }
-
-            85%, 100% {
-                left: 150%;
-            }
-        }
-
-        .id-card:hover {
-            transform: translateY(-7px);
-            border-color: rgba(72, 229, 255, 0.45);
             box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.4),
-                0 0 30px rgba(72, 229, 255, 0.08);
+                0 0 35px rgba(255, 0, 30, 0.18),
+                0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .card::before {
+            content: "BLEACH";
+            position: absolute;
+            top: 45%;
+            right: -30px;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 35px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: rgba(255, 255, 255, 0.025);
+            pointer-events: none;
         }
 
         .card-top {
@@ -265,108 +297,449 @@
             justify-content: space-between;
             align-items: center;
             gap: 12px;
-            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        .card-title {
+        .card-top h2 {
+            font-family: 'Orbitron', sans-serif;
             font-size: 13px;
-            color: var(--muted);
+            letter-spacing: 2px;
+        }
+
+        .rank {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--red);
+            font-size: 10px;
             letter-spacing: 1px;
+            border: 1px solid rgba(255, 38, 56, 0.5);
+            padding: 8px 10px;
         }
 
-        .id-number {
-            font-size: 12px;
-            color: var(--cyan);
-            padding: 7px 10px;
-            border-radius: 8px;
-            background: rgba(72, 229, 255, 0.08);
-        }
-
-        /* =========================
-           6. IDENTITAS
-        ========================= */
+        /* PROFILE */
 
         .profile {
             display: flex;
             align-items: center;
-            gap: 18px;
-            margin-bottom: 30px;
+            gap: 22px;
+            padding: 28px 0;
         }
 
         .avatar {
+            position: relative;
             flex-shrink: 0;
-            width: 78px;
-            height: 78px;
-            border-radius: 20px;
+            width: 100px;
+            height: 120px;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-
             background: linear-gradient(
-                135deg,
-                #2563eb,
-                #9333ea
+                145deg,
+                #32080d,
+                #141419
             );
 
-            box-shadow: 0 8px 30px rgba(84, 132, 255, 0.25);
+            border: 1px solid rgba(255, 38, 56, 0.7);
+            overflow: hidden;
         }
 
-        .profile-info h2 {
-            font-size: 22px;
+        .avatar::before {
+            content: "";
+            position: absolute;
+            inset: -50%;
+            background: conic-gradient(
+                transparent,
+                transparent,
+                var(--red),
+                transparent
+            );
+            animation: rotate 5s linear infinite;
+        }
+
+        .avatar::after {
+            content: "死神";
+            position: absolute;
+            inset: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111116;
+            font-size: 35px;
+            color: var(--red);
+            text-shadow: 0 0 15px rgba(255, 38, 56, 0.7);
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .profile-info h3 {
+            font-size: 27px;
+            letter-spacing: 1px;
             margin-bottom: 7px;
             overflow-wrap: anywhere;
         }
 
         .profile-info p {
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.6;
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.7;
         }
 
-        /* =========================
-           7. DETAIL INFORMASI
-        ========================= */
-
-        .divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            margin-bottom: 22px;
+        .profile-info .division {
+            color: var(--red);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-top: 8px;
         }
 
-        .details {
+        /* DATA */
+
+        .data-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px 15px;
+            gap: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        .detail-label {
-            color: var(--muted);
-            font-size: 12px;
-            margin-bottom: 8px;
+        .data {
+            padding: 20px 10px 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.09);
         }
 
-        .detail-value {
-            font-size: 14px;
-            font-weight: bold;
+        .data:nth-child(odd) {
+            border-right: 1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        .data:nth-child(even) {
+            padding-left: 20px;
+        }
+
+        .label {
+            font-family: 'Orbitron', sans-serif;
+            color: #85858f;
+            font-size: 9px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .value {
+            font-size: 17px;
+            font-weight: 700;
             overflow-wrap: anywhere;
         }
 
-        .status {
+        .active {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            color: #86efac;
+            gap: 8px;
+            color: #76ffb2;
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
+        .active-dot {
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: #4ade80;
-            box-shadow: 0 0 12px #4ade80;
-            animation: pulse 1.8s
+            background: #76ffb2;
+            box-shadow: 0 0 12px #76ffb2;
+            animation: blink 1.5s infinite;
+        }
+
+        /* BUTTON */
+
+        .bankai {
+            width: 100%;
+            margin-top: 25px;
+            padding: 16px;
+
+            background: var(--red);
+            color: white;
+            border: 1px solid var(--red);
+
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .bankai:hover {
+            background: transparent;
+            box-shadow: 0 0 25px rgba(255, 38, 56, 0.25);
+            letter-spacing: 5px;
+        }
+
+        .bankai:active {
+            transform: scale(0.98);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: #777781;
+            font-size: 12px;
+            letter-spacing: 1px;
+            line-height: 2;
+        }
+
+        footer span {
+            color: var(--red);
+        }
+
+        /* BANKAI EFFECT */
+
+        .bankai-mode .aura {
+            opacity: 0.7;
+            filter: blur(65px);
+        }
+
+        .bankai-mode .card {
+            border-color: var(--red);
+            box-shadow:
+                0 0 50px rgba(255, 0, 30, 0.35),
+                inset 0 0 35px rgba(255, 0, 30, 0.08);
+        }
+
+        .bankai-mode .background {
+            animation: flash 0.5s ease;
+        }
+
+        @keyframes flash {
+            0% {
+                filter: brightness(2);
+            }
+
+            100% {
+                filter: brightness(1);
+            }
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+            header {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+
+            .system {
+                font-size: 8px;
+                letter-spacing: 1px;
+            }
+
+            main {
+                padding: 45px 16px 25px;
+            }
+
+            .subtitle {
+                font-size: 9px;
+                letter-spacing: 3px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .card {
+                padding: 22px 18px;
+            }
+
+            .profile {
+                gap: 15px;
+            }
+
+            .avatar {
+                width: 75px;
+                height: 95px;
+            }
+
+            .profile-info h3 {
+                font-size: 21px;
+            }
+
+            .value {
+                font-size: 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background">
+        <div class="aura red"></div>
+        <div class="aura blue"></div>
+    </div>
+
+    <div id="particles" aria-hidden="true"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">SOUL <span>SOCIETY</span></div>
+        <div class="system">SYSTEM ONLINE</div>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+
+        <section class="hero">
+            <p class="subtitle">GOTEI 13 • DIGITAL ARCHIVE</p>
+
+            <h1>
+                SOUL <span>PROFILE</span>
+            </h1>
+
+            <p>
+                Data identitas dalam arsip Soul Society.
+            </p>
+
+            <div class="line"></div>
+        </section>
+
+        <!-- ID CARD -->
+        <section class="card">
+
+            <div class="card-top">
+                <h2>IDENTITY RECORD</h2>
+                <div class="rank">CLASSIFIED ID</div>
+            </div>
+
+            <div class="profile">
+
+                <div class="avatar" aria-label="Simbol Shinigami">
+                </div>
+
+                <div class="profile-info">
+                    <h3>Budi Santoso</h3>
+                    <p>Digital Identity Profile</p>
+                    <p class="division">SHINIGAMI • MEMBER</p>
+                </div>
+
+            </div>
+
+            <div class="data-grid">
+
+                <div class="data">
+                    <p class="label">IDENTITY NUMBER</p>
+                    <p class="value">ID-001</p>
+                </div>
+
+                <div class="data">
+                    <p class="label">POSITION</p>
+                    <p class="value">Teknisi</p>
+                </div>
+
+                <div class="data">
+                    <p class="label">DIVISION</p>
+                    <p class="value">IT Division</p>
+                </div>
+
+                <div class="data">
+                    <p class="label">STATUS</p>
+                    <p class="value active">
+                        <span class="active-dot"></span>
+                        ACTIVE
+                    </p>
+                </div>
+
+            </div>
+
+            <button class="bankai" onclick="aktifkanBankai()">
+                ⚔ RELEASE BANKAI
+            </button>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>SOUL SOCIETY DIGITAL ARCHIVE</p>
+        <p>POWERED BY <span>HTML • CSS • JAVASCRIPT</span></p>
+        <p>All systems operational.</p>
+    </footer>
+
+    <script>
+        // Membuat partikel reiatsu di latar belakang.
+
+        const particles = document.getElementById("particles");
+
+        for (let i = 0; i < 35; i++) {
+            const particle = document.createElement("div");
+
+            particle.className = "particle";
+
+            particle.style.left = Math.random() * 100 + "%";
+
+            particle.style.animationDuration =
+                (5 + Math.random() * 10) + "s";
+
+            particle.style.animationDelay =
+                (Math.random() * 10) + "s";
+
+            particle.style.opacity =
+                (0.2 + Math.random() * 0.7);
+
+            particles.appendChild(particle);
+        }
+
+        // Efek Bankai saat tombol ditekan.
+
+        let bankaiAktif = false;
+
+        function aktifkanBankai() {
+            bankaiAktif = !bankaiAktif;
+
+            document.body.classList.toggle(
+                "bankai-mode",
+                bankaiAktif
+            );
+
+            const tombol = document.querySelector(".bankai");
+
+            if (bankaiAktif) {
+                tombol.textContent = "🔥 BANKAI ACTIVATED";
+            } else {
+                tombol.textContent = "⚔ RELEASE BANKAI";
+            }
+        }
+    </script>
+
+</body>
+</html>
