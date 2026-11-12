@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana Arena - Pertarungan Sihir 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;800&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#ffd36a; --violet:#8a5bff; --cyan:#6fe3ff; }
+  * { box-sizing:border-box; margin:0; padding:0; user-select:none; }
+  html,body { width:100%; height:100%; overflow:hidden; background:#05030c; font-family:'Cinzel',Georgia,serif; color:#f1eaff; }
+  canvas#game { position:fixed; inset:0; width:100%; height:100%; display:block; cursor:crosshair; }
+
+  /* ---------- OVERLAY / MENU ---------- */
+  .overlay { position:fixed; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center;
+    background:radial-gradient(ellipse at center, rgba(20,8,50,.55), rgba(3,1,10,.88)); z-index:10; text-align:center; padding:20px; }
+  .overlay.show { display:flex; }
+  h1 { font-size:clamp(34px,7vw,76px); letter-spacing:6px; font-weight:800;
+    background:linear-gradient(180deg,#fff6c9,#ffc94d 45%,#b86bff); -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:0 0 30px rgba(180,110,255,.35); margin-bottom:6px; }
+  h2 { font-size:clamp(26px,4.5vw,46px); letter-spacing:4px; margin-bottom:14px; color:var(--gold); }
+  .sub { opacity:.75; letter-spacing:3px; margin-bottom:34px; font-size:clamp(12px,1.6vw,17px); }
+  .btn { font-family:inherit; font-size:20px; letter-spacing:3px; font-weight:800; color:#fff; cursor:pointer;
+    background:linear-gradient(180deg,rgba(138,91,255,.35),rgba(60,20,140,.55)); border:2px solid rgba(255,211,106,.7);
+    padding:13px 38px; margin:7px; min-width:290px; border-radius:6px; transition:.18s; }
+  .btn:hover { transform:scale(1.05); box-shadow:0 0 26px rgba(138,91,255,.8); background:linear-gradient(180deg,rgba(168,121,255,.5),rgba(90,40,180,.7)); }
+  .btn.small { min-width:0; font-size:15px; padding:9px 22px; }
+  .panel { max-width:640px; line-height:1.9; font-size:17px; background:rgba(15,8,40,.8); border:1px solid rgba(255,211,106,.4);
+    border-radius:10px; padding:22px 30px; margin-bottom:20px; text-align:left; }
+  .panel b { color:var(--gold); }
+  .grid { display:grid; grid-template-columns:repeat(3,minmax(170px,210px)); gap:14px; margin-bottom:22px; }
+  .lv { position:relative; font-family:inherit; color:#fff; cursor:pointer; padding:18px 10px; border-radius:10px;
+    background:rgba(20,10,55,.85); border:2px solid #555; transition:.18s; }
+  .lv .n { font-size:34px; font-weight:800; }
+  .lv .nm { font-size:13px; opacity:.85; margin:4px 0 8px; min-height:32px; }
+  .lv .tag { display:inline-block; font-size:12px; font-weight:800; padding:3px 10px; border-radius:20px; letter-spacing:2px; }
+  .lv.easy { border-color:#4be08b; } .lv.easy .tag { background:#1f7a47; }
+  .lv.ext  { border-color:#ff4a4a; } .lv.ext .tag { background:#a31616; }
+  .lv:hover:not(.locked) { transform:translateY(-4px) scale(1.04); box-shadow:0 0 24px rgba(255,255,255,.3); }
+  .lv.locked { opacity:.35; cursor:not-allowed; filter:grayscale(1); }
+  .ups { display:grid; grid-template-columns:repeat(2,minmax(220px,290px)); gap:14px; margin-bottom:14px; }
+  .up { font-family:inherit; color:#fff; cursor:pointer; padding:18px; border-radius:10px; background:rgba(25,12,70,.9);
+    border:2px solid var(--violet); transition:.18s; text-align:left; }
+  .up:hover { transform:scale(1.05); box-shadow:0 0 24px rgba(138,91,255,.9); border-color:var(--gold); }
+  .up .t { font-size:19px; font-weight:800; color:var(--gold); margin-bottom:5px; }
+  .up .d { font-size:14px; opacity:.85; }
+
+  /* ---------- HUD ---------- */
+  #hud { position:fixed; inset:0; pointer-events:none; display:none; z-index:5; }
+  #hud.show { display:block; }
+  .bars { position:absolute; left:20px; top:18px; width:min(360px,60vw); }
+  .bar { position:relative; height:24px; margin-bottom:8px; background:rgba(0,0,0,.6); border:2px solid rgba(255,255,255,.35); border-radius:14px; overflow:hidden; }
+  .bar .fill { height:100%; width:100%; transition:width .1s; }
+  #hpFill { background:linear-gradient(90deg,#ff3b5c,#ff8a5c); }
+  #mpFill { background:linear-gradient(90deg,#3b6bff,#6fe3ff); }
+  .bar span { position:absolute; inset:0; text-align:center; font-size:13px; line-height:20px; font-weight:800; text-shadow:0 0 4px #000; }
+  .top { position:absolute; top:14px; left:50%; transform:translateX(-50%); text-align:center; text-shadow:0 0 10px #000; }
+  #lvlName { font-size:22px; font-weight:800; color:var(--gold); letter-spacing:2px; }
+  #lvlDiff { font-size:13px; letter-spacing:3px; font-weight:800; }
+  #progress { font-size:17px; margin-top:2px; }
+  #bossWrap { width:min(420px,70vw); margin:8px auto 0; display:none; }
+  #bossFill { background:linear-gradient(90deg,#9b1cff,#ff2266); }
+  .slots { position:absolute; left:50%; bottom:22px; transform:translateX(-50%); display:flex; gap:14px; }
+  .slot { position:relative; width:84px; height:84px; border-radius:12px; border:3px solid rgba(255,255,255,.35);
+    background:rgba(10,5,30,.8); text-align:center; overflow:hidden; }
+  .slot.sel { border-color:var(--gold); box-shadow:0 0 22px rgba(255,211,106,.8); transform:translateY(-6px); }
+  .slot .k { position:absolute; top:3px; left:7px; font-size:13px; font-weight:800; opacity:.85; }
+  .slot .ic { font-size:34px; margin-top:16px; }
+  .slot .nm { font-size:10px; margin-top:-2px; opacity:.85; }
+  .slot .cd { position:absolute; left:0; bottom:0; width:100%; height:0%; background:rgba(0,0,0,.65); }
+  .slot .cost { position:absolute; right:5px; bottom:3px; font-size:11px; color:var(--cyan); font-weight:800; }
+  #banner { position:fixed; top:28%; left:50%; transform:translate(-50%,-50%); text-align:center; z-index:6; pointer-events:none;
+    font-size:clamp(28px,6vw,64px); font-weight:800; letter-spacing:6px; text-shadow:0 0 30px #000, 0 0 20px currentColor; opacity:0; }
+  #banner small { display:block; font-size:.38em; letter-spacing:5px; margin-top:6px; }
+  #banner.go { animation:ban 2.6s ease forwards; }
+  @keyframes ban { 0%{opacity:0;transform:translate(-50%,-50%) scale(.6);} 15%{opacity:1;transform:translate(-50%,-50%) scale(1);} 75%{opacity:1;} 100%{opacity:0;transform:translate(-50%,-60%) scale(1.1);} }
+  #hurt { position:fixed; inset:0; pointer-events:none; z-index:4; opacity:0; transition:opacity .35s;
+    background:radial-gradient(ellipse at center, transparent 45%, rgba(255,0,40,.65)); }
+  #hint { position:absolute; right:20px; bottom:18px; font-size:12px; opacity:.55; text-align:right; line-height:1.6; font-family:Georgia,serif; }
+  .stat { font-size:15px; opacity:.85; margin:4px 0 24px; line-height:1.8; }
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="hurt"></div>
+<div id="banner"></div>
+
+<!-- HUD -->
+<div id="hud">
+  <div class="bars">
+    <div class="bar"><div class="fill" id="hpFill"></div><span id="hpText">100/100</span></div>
+    <div class="bar"><div class="fill" id="mpFill"></div><span id="mpText">100/100</span></div>
+  </div>
+  <div class="top">
+    <div id="lvlName">LEVEL 1</div>
+    <div id="lvlDiff">MUDAH</div>
+    <div id="progress">Musuh: 0/10</div>
+    <div id="bossWrap"><div class="bar"><div class="fill" id="bossFill"></div><span>👹 RAJA KEGELAPAN</span></div></div>
+  </div>
+  <div class="slots">
+    <div class="slot sel" id="slot0"><div class="k">1</div><div class="ic">🔥</div><div class="nm">Bola Api</div><div class="cost">8</div><div class="cd"></div></div>
+    <div class="slot" id="slot1"><div class="k">2</div><div class="ic">❄️</div><div class="nm">Nova Es</div><div class="cost">25</div><div class="cd"></div></div>
+    <div class="slot" id="slot2"><div class="k">3</div><div class="ic">⚡</div><div class="nm">Petir</div><div class="cost">20</div><div class="cd"></div></div>
+    <div class="slot" id="slot3" style="border-style:dashed"><div class="k">SPASI</div><div class="ic">💨</div><div class="nm">Dash</div><div class="cd"></div></div>
+  </div>
+  <div id="hint">WASD gerak · Mouse bidik · Klik tembak<br>1/2/3 / scroll ganti sihir · Spasi dash · Esc jeda</div>
+</div>
+
+<!-- MENU UTAMA -->
+<div class="overlay show" id="menu">
+  <h1>ARCANA ARENA</h1>
+  <div class="sub">PERTARUNGAN SIHIR 3D · 3 LEVEL MUDAH · 3 LEVEL EKSTREM</div>
+  <button class="btn" id="btnStart">⚔ MULAI MAIN</button>
+  <button class="btn" id="btnLevels">📜 PILIH LEVEL</button>
+  <button class="btn" id="btnHow">❓ CARA BERMAIN</button>
+</div>
+
+<!-- PILIH LEVEL -->
+<div class="overlay" id="levels">
+  <h2>PILIH LEVEL</h2>
+  <div class="grid" id="levelGrid"></div>
+  <button class="btn small" data-goto="menu">← KEMBALI</button>
+</div>
+
+<!-- CARA BERMAIN -->
+<div class="overlay" id="howto">
+  <h2>CARA BERMAIN</h2>
+  <div class="panel">
+    <b>W A S D</b> / Panah : bergerak<br>
+    <b>Mouse</b> : membidik &nbsp;|&nbsp; <b>Klik kiri</b> (tahan) : merapal sihir<br>
+    <b>1</b> 🔥 Bola Api – murah, cepat, ledakan kecil<br>
+    <b>2</b> ❄️ Nova Es – ledakan di sekitarmu, memperlambat musuh<br>
+    <b>3</b> ⚡ Petir – menyambar dan melompat antar musuh<br>
+    <b>Spasi</b> 💨 Dash – menghindar sesaat (kebal)<br>
+    <b>Esc</b> : jeda<br><br>
+    Kalahkan semua musuh untuk naik level. Setiap selesai level, pilih <b>1 peningkatan</b>.
+    Ambil ❤ hijau (nyawa) dan 💠 biru (mana) yang dijatuhkan musuh.
+    Level 4–6 itu <b>EKSTREM</b>: musuh cepat, banyak, dan menembak. Level 6 punya <b>BOS</b>!
+  </div>
+  <button class="btn small" data-goto="menu">← KEMBALI</button>
+</div>
+
+<!-- JEDA -->
+<div class="overlay" id="pause">
+  <h2>⏸ DIJEDA</h2>
+  <button class="btn" id="btnResume">▶ LANJUT</button>
+  <button class="btn" id="btnRestart">↻ ULANGI LEVEL</button>
+  <button class="btn" id="btnQuit">🏠 MENU UTAMA</button>
+</div>
+
+<!-- LEVEL UP -->
+<div class="overlay" id="upgrade">
+  <h2>✨ LEVEL SELESAI! ✨</h2>
+  <div class="sub" id="upSub">Pilih satu peningkatan sihir</div>
+  <div class="ups">
+    <button class="up" data-up="hp"><div class="t">❤ Jiwa Baja</div><div class="d">+25 Nyawa Maksimal</div></button>
+    <button class="up" data-up="dmg"><div class="t">🔥 Sihir Membara</div><div class="d">+25% Damage semua sihir</div></button>
+    <button class="up" data-up="regen"><div class="t">💠 Sumber Mana</div><div class="d">+40% Regenerasi Mana</div></button>
+    <button class="up" data-up="speed"><div class="t">💨 Langkah Angin</div><div class="d">+12% Kecepatan gerak</div></button>
+  </div>
+</div>
+
+<!-- GAME OVER -->
+<div class="overlay" id="gameover">
+  <h2 style="color:#ff5566">☠ KAMU KALAH ☠</h2>
+  <div class="stat" id="overStat"></div>
+  <button class="btn" id="btnRetry">↻ COBA LAGI</button>
+  <button class="btn" id="btnQuit2">🏠 MENU UTAMA</button>
+</div>
+
+<!-- MENANG -->
+<div class="overlay" id="win">
+  <h1 style="font-size:clamp(30px,6vw,64px)">ARCH-WIZARD!</h1>
+  <div class="stat">Kamu menaklukkan seluruh 6 level dan mengalahkan Raja Kegelapan.<br>Dunia sihir selamat berkatmu. 🌟</div>
+  <button class="btn" id="btnAgain">↻ MAIN LAGI</button>
+  <button class="btn" id="btnQuit3">🏠 MENU UTAMA</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
